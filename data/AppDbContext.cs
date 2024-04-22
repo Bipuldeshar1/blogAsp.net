@@ -15,6 +15,7 @@ namespace blogg.data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            base.OnModelCreating(builder);
             builder.Entity<BlogModel>()
                 .HasOne(b => b.appUSer)//blog model has one user $ b.appUSer from blogmodel
                 .WithMany(u => u.BlogModels)//App usermodel has many reln with blog  from appuser 
