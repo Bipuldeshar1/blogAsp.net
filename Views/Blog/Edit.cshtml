@@ -1,0 +1,40 @@
+﻿@using blogg.Models.viewModel.BlogViewModel
+@model PostModel
+
+<div class="container w-50 h-100">
+    <h1>Edit</h1>
+
+    <form method="post" enctype="multipart/form-data" action="Edit" class="mt-5">
+        <div asp-validation-summary="All" class="text-danger"></div>
+
+        <div class="mb-3">
+            <label class="form-label">Id</label>
+            <input type="text" class="form-control" name="id" value="@ViewData["id"]" readonly>
+
+        </div>
+        <div class="form-group mb-3">
+            <label>Title</label>
+            <input asp-for="Title" type="text" class="form-control">
+        </div>
+        <div class="form-group mb-3">
+            <label>Description</label>
+            <input asp-for="Description" type="text" class="form-control">
+        </div>
+      @*   <div class="form-group mb-3">
+            <label>Image</label>
+            <input asp-for="ImageFile" type="file" name="ImageFile" class="form-control">
+        </div> *@
+        <img  src=@ViewData["img"] alt="Card image cap" width="200" height="200">
+        <div class="mb-3">
+            <label asp-for="ImageFile" class="control-label"></label>
+            <div class="custom-file">
+                <input asp-for="ImageFile" class="custom-file-input" value="@ViewData["img"] " />
+            </div>
+
+        </div>
+
+
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>

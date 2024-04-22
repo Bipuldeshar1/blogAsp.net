@@ -1,0 +1,24 @@
+﻿@using blogg.Models.viewModel
+@using Microsoft.AspNetCore.Identity
+@model BlogModel
+@inject UserManager<AppUSer> userManager
+
+
+@if (Convert.ToString(userManager.GetUserId(User)) == Convert.ToString(Model.appUSer.Id))
+{
+    <h1>Detail</h1>
+    <p>@Model.Title</p>
+    <p>@Model.Description</p>
+    <p>@Model.appUSer.UserName</p>
+    <p>@Model.appUSer.Email</p>
+    <a asp-route-id="@Model.Id" asp-controller="Blog" asp-action="Delete">delete</a>
+    <a asp-route-id="@Model.Id" asp-controller="Blog" asp-action="Edit">Edit</a>
+}
+else
+{
+    <h1>Detail</h1>
+    <p>@Model.Title</p>
+    <p>@Model.Description</p>
+    <p>@Model.appUSer.UserName</p>
+    <p>@Model.appUSer.Email</p>
+}
