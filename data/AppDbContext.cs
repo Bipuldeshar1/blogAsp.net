@@ -16,10 +16,10 @@ namespace blogg.data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<BlogModel>()
-                .HasOne(b => b.appUSer)
-                .WithMany(u => u.BlogModels)
-                .HasForeignKey(b => b.AuthorId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .HasOne(b => b.appUSer)//blog model has one user $ b.appUSer from blogmodel
+                .WithMany(u => u.BlogModels)//App usermodel has many reln with blog  from appuser 
+                .HasForeignKey(b => b.AuthorId)//fk in blogmodel
+                .OnDelete(DeleteBehavior.Cascade);//if user is deleted all associated blog deleted
         }
     }
 }
