@@ -1,5 +1,6 @@
 using blogg.data;
 using blogg.Models;
+using blogg.service;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -23,6 +24,7 @@ builder.Services.Configure<IdentityOptions>(options =>
    
 }
 );
+builder.Services.AddScoped<IImageService, ImageService>();
 
 var app = builder.Build();
 

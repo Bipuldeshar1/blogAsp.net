@@ -12,7 +12,7 @@ namespace blogg.Models
         public string ImageUrl { get; set; }
         public string Description { get; set; }
 
-        [ForeignKey("appUSer")]
+        [ForeignKey("AuthorId")]
         public string AuthorId { get; set; }
 
         public AppUSer appUSer { get; set; }
