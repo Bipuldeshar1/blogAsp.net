@@ -1,0 +1,24 @@
+﻿@using blogg.Models.viewModel.RoleViewModel
+@model RoleViewModel
+
+@{
+    ViewBag.Title = "Create New Role";
+}
+
+<div class="container w-50 h-100">
+    <h1>Create NEw Role</h1>
+    <form asp-action="CreateRole" asp-controller="Role" method="post">
+        <div asp-validation-summary="All" class="text-danger"></div>
+
+        <div class="form-group mb-3">
+            <label>Role</label>
+            <input asp-for="RoleName" type="text" class="form-control">
+            <span asp-validation-for="RoleName" class="text-danger"></span>
+        </div>
+      
+
+
+
+        <button type="submit" class="btn btn-primary">Add Role</button>
+    </form>
+</div>
