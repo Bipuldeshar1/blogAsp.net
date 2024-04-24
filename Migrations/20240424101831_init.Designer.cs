@@ -12,7 +12,7 @@ using blogg.data;
 namespace blogg.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240422031914_init")]
+    [Migration("20240424101831_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -231,6 +231,65 @@ namespace blogg.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("blogg.Models.BlogModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("AuthorId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AuthorId");
+
+                    b.ToTable("blogModels");
+                });
+
+            modelBuilder.Entity("blogg.Models.CommentModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BlogId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Comment")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BlogId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("cmtModel");
+                });
+
             modelBuilder.Entity("blogg.Models.AppUSer", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
@@ -291,6 +350,48 @@ namespace blogg.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("blogg.Models.BlogModel", b =>
+                {
+                    b.HasOne("blogg.Models.AppUSer", "appUSer")
+                        .WithMany("BlogModels")
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("appUSer");
+                });
+
+            modelBuilder.Entity("blogg.Models.CommentModel", b =>
+                {
+                    b.HasOne("blogg.Models.BlogModel", "Blog")
+                        .WithMany("commentModels")
+                        .HasForeignKey("BlogId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("blogg.Models.AppUSer", "AppUser")
+                        .WithMany("commentModels")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AppUser");
+
+                    b.Navigation("Blog");
+                });
+
+            modelBuilder.Entity("blogg.Models.BlogModel", b =>
+                {
+                    b.Navigation("commentModels");
+                });
+
+            modelBuilder.Entity("blogg.Models.AppUSer", b =>
+                {
+                    b.Navigation("BlogModels");
+
+                    b.Navigation("commentModels");
                 });
 #pragma warning restore 612, 618
         }

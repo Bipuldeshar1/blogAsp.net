@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace blogg.Controllers
 {
-    [Authorize(Roles ="Admin")]
+  
     public class RoleController : Controller
     {
         private readonly RoleManager<IdentityRole> roleManager;
@@ -138,7 +138,7 @@ namespace blogg.Controllers
             }
             for(int i = 0; i < model.Count; i++)
             {
-             var user=await userManager.FindByIdAsync(model[i].UserId);
+             var user=await userManager.FindByIdAsync(Convert.ToString(userManager.GetUserId(User)!));
                 
                 IdentityResult result=null;
                 if (model[i].IsSelected &&  !(await userManager.IsInRoleAsync(user, role.Name)))

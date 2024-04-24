@@ -158,6 +158,55 @@ namespace blogg.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "blogModels",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AuthorId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_blogModels", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_blogModels_AspNetUsers_AuthorId",
+                        column: x => x.AuthorId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "cmtModel",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Comment = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    BlogId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_cmtModel", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_cmtModel_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_cmtModel_blogModels_BlogId",
+                        column: x => x.BlogId,
+                        principalTable: "blogModels",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -196,6 +245,21 @@ namespace blogg.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_blogModels_AuthorId",
+                table: "blogModels",
+                column: "AuthorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_cmtModel_BlogId",
+                table: "cmtModel",
+                column: "BlogId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_cmtModel_UserId",
+                table: "cmtModel",
+                column: "UserId");
         }
 
         /// <inheritdoc />
@@ -217,7 +281,13 @@ namespace blogg.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "cmtModel");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "blogModels");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

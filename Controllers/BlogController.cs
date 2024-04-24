@@ -90,7 +90,13 @@ namespace blogg.Controllers
         [HttpGet]
         public IActionResult Detail(int id)
         {
-            var blog=  context.blogModels.Include(e=>e.appUSer).Include(e=>e.commentModels).SingleOrDefault(b=>b.Id==id);
+            var blog = context.blogModels.Include(e => e.appUSer).Include(e=>e.commentModels).SingleOrDefault(b => b.Id == id);
+
+            if (blog == null)
+            {
+                return NotFound();
+            }
+        
             return View(blog);
         }
 
@@ -137,6 +143,24 @@ namespace blogg.Controllers
         
             }
             return View(post);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> AddComment(int blogId,string content)
+        {
+            var userId=userManager.GetUserId(User);
+            var cmt = new CommentModel()
+            {
+                BlogId =blogId,
+                UserId = userId,
+                Comment = content
+            };
+          
+            context.cmtModel.Add(cmt);
+            await context.SaveChangesAsync();
+
+            return RedirectToAction("Detail", new{id=blogId});
         }
     }
 }

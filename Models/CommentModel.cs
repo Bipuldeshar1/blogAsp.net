@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace blogg.Models
 {
@@ -6,10 +7,20 @@ namespace blogg.Models
     {
         [Key]
         public int Id { get; set; }
-        public string comment { get; set; }
-        public string BlogId { get; set; }
-        public BlogModel blogModel { get; set; }
-        public string userId { get; set; }
-        public AppUSer appUser { get; set; }
+
+        [Required]
+        public string Comment { get; set; }
+
+       
+        [Required]
+        public int BlogId { get; set; }
+
+        public BlogModel Blog { get; set; }
+
+        [ForeignKey("AppUser")]
+        public string UserId { get; set; }
+
+        public AppUSer AppUser { get; set; }
+
     }
 }

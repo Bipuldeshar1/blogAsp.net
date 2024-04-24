@@ -1,5 +1,7 @@
-﻿@using blogg.Models.viewModel
+﻿
 @using Microsoft.AspNetCore.Identity
+
+
 @model BlogModel
 @inject UserManager<AppUSer> userManager
 
@@ -16,9 +18,9 @@
      
         <div class="row">
             <div class="col-md-8">
-            
-                
-             
+
+
+
                 <img src=@Model.ImageUrl class="img-fluid mb-4" alt="Blog Image">
 
                 <h2 class="lead">@Model.Title</h2>
@@ -31,22 +33,28 @@
                     <div class="card-body">
                         <h5 class="card-title">Comment</h5>
                         <ul class="list-group list-group-flush">
-                           <p>cmt</p>
-                            <p>cmt</p>
-                            <p>cmt</p>
-                            <p>cmt</p>
+                            @if (Model.commentModels != null && Model.commentModels.Any())
+                            {  @foreach (var cmt in Model.commentModels)
+                                {
+                                    <p>@cmt.Comment</p>
+
+                                }
+                            }
+                            else
+                            {
+                                <p>No comment</p>
+                            }
                         </ul>
                     </div>
                 </div>
-                <form asp-action="CreateRole" asp-controller="Role" method="post">
-
-
+                <form method="post" asp-action="AddComment" asp-controller="Blog">
                     <div class="form-group mb-3">
+                        <input name="blogId" value="@Model.Id" type="hidden" class="form-control">
+                      
+                       
                         <label>Add Comment</label>
-                        <input type="text" class="form-control">
-
+                        <input name="content" type="text" class="form-control">
                     </div>
-
                     <button type="submit" class="btn btn-primary">Add Comment</button>
                 </form>
             </div>
@@ -81,27 +89,28 @@ else
                     <div class="card-body">
                         <h5 class="card-title">Comment</h5>
                         <ul class="list-group list-group-flush">
-                            <p>cmt</p>
-                            <p>cmt</p>
-                            <p>cmt</p>
-                            <p>cmt</p>
-                            <p>cmt</p>
-                            <p>cmt</p>
-                            <p>cmt</p>
-                            <p>cmt</p>
-                            <p>cmt</p>
+                            @if (Model.commentModels != null && Model.commentModels.Any())
+                            {  @foreach (var cmt in Model.commentModels)
+                                {
+                                    <p>@cmt.Comment</p>
+
+                                }
+                            }
+                            else
+                            {
+                                <p>No comment</p>
+                            }
+
                          </ul>
                     </div>
                 </div>
-                <form asp-action="CreateRole" asp-controller="Role" method="post">
-
-
+                <form method="post" asp-action="AddComment" asp-controller="Blog">
                     <div class="form-group mb-3">
+                        <input name="blogId" value="@Model.Id" type="hidden" class="form-control">
+
                         <label>Add Comment</label>
-                        <input type="text" class="form-control">
-
+                        <input name="content" type="text" class="form-control">
                     </div>
-
                     <button type="submit" class="btn btn-primary">Add Comment</button>
                 </form>
             </div>

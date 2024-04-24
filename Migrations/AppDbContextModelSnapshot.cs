@@ -267,31 +267,24 @@ namespace blogg.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("BlogId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("appUserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("blogModelId")
+                    b.Property<int>("BlogId")
                         .HasColumnType("int");
 
-                    b.Property<string>("comment")
+                    b.Property<string>("Comment")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("userId")
+                    b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("appUserId");
+                    b.HasIndex("BlogId");
 
-                    b.HasIndex("blogModelId");
+                    b.HasIndex("UserId");
 
-                    b.ToTable("CommentModels");
+                    b.ToTable("cmtModel");
                 });
 
             modelBuilder.Entity("blogg.Models.AppUSer", b =>
@@ -369,19 +362,21 @@ namespace blogg.Migrations
 
             modelBuilder.Entity("blogg.Models.CommentModel", b =>
                 {
-                    b.HasOne("blogg.Models.AppUSer", "appUser")
-                        .WithMany()
-                        .HasForeignKey("appUserId");
-
-                    b.HasOne("blogg.Models.BlogModel", "blogModel")
+                    b.HasOne("blogg.Models.BlogModel", "Blog")
                         .WithMany("commentModels")
-                        .HasForeignKey("blogModelId")
+                        .HasForeignKey("BlogId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("blogg.Models.AppUSer", "AppUser")
+                        .WithMany("commentModels")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("appUser");
+                    b.Navigation("AppUser");
 
-                    b.Navigation("blogModel");
+                    b.Navigation("Blog");
                 });
 
             modelBuilder.Entity("blogg.Models.BlogModel", b =>
@@ -392,6 +387,8 @@ namespace blogg.Migrations
             modelBuilder.Entity("blogg.Models.AppUSer", b =>
                 {
                     b.Navigation("BlogModels");
+
+                    b.Navigation("commentModels");
                 });
 #pragma warning restore 612, 618
         }
