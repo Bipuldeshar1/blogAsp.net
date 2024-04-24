@@ -17,5 +17,7 @@ namespace blogg.Models
 
         public AppUSer appUSer { get; set; }
 
+        public ICollection<CommentModel>commentModels { get; set; }
+
     }
 }

@@ -4,6 +4,8 @@
 @inject UserManager<AppUSer> userManager
 
 
+
+
 @if (Convert.ToString(userManager.GetUserId(User)) == Convert.ToString(Model.appUSer.Id))
 {
     <div class="container">
@@ -36,6 +38,17 @@
                         </ul>
                     </div>
                 </div>
+                <form asp-action="CreateRole" asp-controller="Role" method="post">
+
+
+                    <div class="form-group mb-3">
+                        <label>Add Comment</label>
+                        <input type="text" class="form-control">
+
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Add Comment</button>
+                </form>
             </div>
          
         </div>
@@ -54,8 +67,6 @@ else
 
         <div class="row">
             <div class="col-md-8">
-
-                
 
                 <img src=@Model.ImageUrl class="img-fluid mb-4" alt="Blog Image">
 
@@ -90,9 +101,6 @@ else
                         <input type="text" class="form-control">
 
                     </div>
-
-
-
 
                     <button type="submit" class="btn btn-primary">Add Comment</button>
                 </form>

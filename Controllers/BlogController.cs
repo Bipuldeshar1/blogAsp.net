@@ -90,7 +90,7 @@ namespace blogg.Controllers
         [HttpGet]
         public IActionResult Detail(int id)
         {
-            var blog=  context.blogModels.Include(e=>e.appUSer).SingleOrDefault(b=>b.Id==id);
+            var blog=  context.blogModels.Include(e=>e.appUSer).Include(e=>e.commentModels).SingleOrDefault(b=>b.Id==id);
             return View(blog);
         }
 

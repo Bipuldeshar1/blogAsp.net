@@ -12,6 +12,7 @@ namespace blogg.data
         }
         public DbSet<AppUSer> AppUSers { get; set; }
         public DbSet<BlogModel>blogModels { get; set; }
+        public DbSet<CommentModel>CommentModels { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
