@@ -16,7 +16,15 @@
             <input asp-for="RoleName" type="text" class="form-control">
             <span asp-validation-for="RoleName" class="text-danger"></span>
         </div>
-  
+
+    <div class="card-footer">
+        <div class="form-group row">
+            <div class="col-sm-10">
+                <button type="submit" class="btn btn-primary">Update</button>
+                <a asp-action="ListRoles" class="btn btn-primary">cancel</a>
+
+            </div>
+        </div>
        <div class="card">
             <div class="card-header">
                 <h3>users in this role</h3>
@@ -38,8 +46,10 @@
             <div class="card-footer">
             <div class="form-group row">
                 <div class="col-sm-10">
-                    <button type="submit" class="btn btn-primary">Update</button>
-                    <a asp-action="ListRoles" class="btn btn-primary">cancel</a>
+                   
+                 <a asp-action="EditUsersInRole"asp-controller="Role" 
+                 asp-route-id="@Model.Id" name="roleId" class="btn btn-primary">
+                 Add or remove users</a>
                 
                 </div>
             </div>

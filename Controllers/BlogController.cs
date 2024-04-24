@@ -10,7 +10,7 @@ using Microsoft.Extensions.Hosting;
 
 namespace blogg.Controllers
 {
-    [Authorize]
+  
     public class BlogController : Controller
     {
         private readonly AppDbContext context;
@@ -25,7 +25,7 @@ namespace blogg.Controllers
             this.imageService = imageService;
         }
         [HttpGet]
-
+        [Authorize(Roles = "User,Admin")]
         public async Task<IActionResult> Edit(int id)
         {
             var product= await context.blogModels.FindAsync(id);
@@ -44,6 +44,7 @@ namespace blogg.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "User,Admin")]
         public async Task<IActionResult> Edit(int id,PostModel postModel)
         {
             var product = await context.blogModels.FindAsync(id);
@@ -73,6 +74,7 @@ namespace blogg.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "User,Admin")]
         public async Task<IActionResult> Delete(int id)
         {
             var product =await context.blogModels.FindAsync(id);
@@ -99,11 +101,13 @@ namespace blogg.Controllers
             return View(blogs);
         }
         [HttpGet]
-       public IActionResult Create()
+        [Authorize(Roles = "User,Admin")]
+        public IActionResult Create()
         {
             return View();
         }
         [HttpPost]
+        [Authorize(Roles = "User,Admin")]
         public async Task<IActionResult> Create(PostModel post)
         {
 

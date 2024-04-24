@@ -6,19 +6,99 @@
 
 @if (Convert.ToString(userManager.GetUserId(User)) == Convert.ToString(Model.appUSer.Id))
 {
-    <h1>Detail</h1>
-    <p>@Model.Title</p>
-    <p>@Model.Description</p>
-    <p>@Model.appUSer.UserName</p>
-    <p>@Model.appUSer.Email</p>
-    <a asp-route-id="@Model.Id" asp-controller="Blog" asp-action="Delete">delete</a>
-    <a asp-route-id="@Model.Id" asp-controller="Blog" asp-action="Edit">Edit</a>
+    <div class="container">
+      
+        <header class="my-4">
+            <h1 class="display-4">Blog Detail</h1>
+        </header>
+     
+        <div class="row">
+            <div class="col-md-8">
+            
+                
+             
+                <img src=@Model.ImageUrl class="img-fluid mb-4" alt="Blog Image">
+
+                <h2 class="lead">@Model.Title</h2>
+                <p>@Model.Description</p>
+
+                <p class="text-muted">Author:@Model.appUSer.UserName</p>
+            </div>
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">Comment</h5>
+                        <ul class="list-group list-group-flush">
+                           <p>cmt</p>
+                            <p>cmt</p>
+                            <p>cmt</p>
+                            <p>cmt</p>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+         
+        </div>
+    </div>
+
+    <a asp-route-id="@Model.Id" asp-controller="Blog" asp-action="Delete" class="btn btn-danger">delete</a>
+    <a asp-route-id="@Model.Id" asp-controller="Blog" asp-action="Edit" class="btn btn-primary">Edit</a>
 }
 else
 {
-    <h1>Detail</h1>
-    <p>@Model.Title</p>
-    <p>@Model.Description</p>
-    <p>@Model.appUSer.UserName</p>
-    <p>@Model.appUSer.Email</p>
+    <div class="container">
+
+        <header class="my-4">
+            <h1 class="display-4">Blog Detail</h1>
+        </header>
+
+        <div class="row">
+            <div class="col-md-8">
+
+                
+
+                <img src=@Model.ImageUrl class="img-fluid mb-4" alt="Blog Image">
+
+                <h2 class="lead">@Model.Title</h2>
+
+                <p>@Model.Description</p>
+
+                <p class="text-muted">Author:@Model.appUSer.UserName</p>
+            </div>
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">Comment</h5>
+                        <ul class="list-group list-group-flush">
+                            <p>cmt</p>
+                            <p>cmt</p>
+                            <p>cmt</p>
+                            <p>cmt</p>
+                            <p>cmt</p>
+                            <p>cmt</p>
+                            <p>cmt</p>
+                            <p>cmt</p>
+                            <p>cmt</p>
+                         </ul>
+                    </div>
+                </div>
+                <form asp-action="CreateRole" asp-controller="Role" method="post">
+
+
+                    <div class="form-group mb-3">
+                        <label>Add Comment</label>
+                        <input type="text" class="form-control">
+
+                    </div>
+
+
+
+
+                    <button type="submit" class="btn btn-primary">Add Comment</button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
 }

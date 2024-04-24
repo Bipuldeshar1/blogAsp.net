@@ -1,6 +1,7 @@
 ﻿using blogg.data;
 using blogg.Models;
 using blogg.Models.viewModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
@@ -36,6 +37,7 @@ namespace blogg.Controllers
             {
                 var result = await userManager.CreateAsync(user,registerModel.Password);
                 if(result.Succeeded) {
+                    await userManager.AddToRoleAsync(user, "User");
                     return RedirectToAction("Login", "Account");
                 }
                 else
@@ -61,14 +63,18 @@ namespace blogg.Controllers
         public async Task<IActionResult> Login(LoginModel loginModel)
         {
             var user = await userManager.FindByEmailAsync(loginModel.Email);
-
+            string returnUrl = HttpContext.Request.Query["ReturnUrl"]!;
             if (ModelState.IsValid)
             {
                 var result = await signInManager.PasswordSignInAsync
             (user.UserName!, loginModel.Password, false, false);
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("Index", "Home");
+                    if (!string.IsNullOrEmpty(returnUrl))
+                    {
+                        return Redirect(returnUrl);
+                    }
+                    return RedirectToAction("Read", "Blog");
                 }
 
                 ModelState.AddModelError("", "incorrect login cred");
@@ -103,7 +109,12 @@ namespace blogg.Controllers
             await signInManager.SignOutAsync();
             return RedirectToAction("Index","Home");
         }
-
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
 
     }
 }
